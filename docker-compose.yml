@@ -1,0 +1,38 @@
+version: '3'
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:11
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+  webserver:
+    container_name: fastapi_container
+    image: . # or use nickname, this works for Dockerfile here.
+    volumes:
+      - .:/code
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - '5050:80'
+    depends_on:
+      - postgres
+
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '6379:6379'
+# to build both run
+# $ docker-compose up --build
