@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from .models import ModelName
 
 app = FastAPI()
@@ -61,3 +61,14 @@ async def get_model(model_name: ModelName):
         return {"model_name": model_name, "message": "LeCNN all the images"}
 
     return {"model_name": model_name, "message": "Have some residuals"}
+
+
+
+# additional validation
+@app.get("/products/")
+async def read_items(q: Optional[str] = Query(None, min_length=3, max_length=50)):
+    results = {"products": [{"item_id": "Foo"}, {"item_id": "Bar"} ]}
+    if q:
+        results.update({"q": q})
+    return results
+
