@@ -38,3 +38,4 @@ async def get_items(item_id: int = Path(..., title="The ID of the item to get"),
     if q:
         results.update({'q': q})
     return results
+
