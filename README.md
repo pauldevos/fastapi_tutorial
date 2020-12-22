@@ -7,6 +7,7 @@
 # if you are inside directory app, don't need it
 # uvicorn python_filename:fastapi_app --reload
 uvicorn directory.main:app --reload
+unicorn app.main:app --reload
 ```
 
 ### Check JSON, Endpoints, API Docs
